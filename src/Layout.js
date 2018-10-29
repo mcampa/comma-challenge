@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Map from './Map';
+import Sidebar from './Sidebar';
 
 import './Layout.css';
 
@@ -8,7 +9,7 @@ export default class Layout extends Component {
     return (
       <div className="Layout">
         <div className="Layout-sidebar">
-          <h1>Comma.ai trips</h1>
+          <Sidebar />
         </div>
         <div className="Layout-main">
           <Map />

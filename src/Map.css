@@ -5,6 +5,7 @@
 }
 
 .Map-container {
+  cursor: grab;
   min-height: 0;
   flex: 1;
 }

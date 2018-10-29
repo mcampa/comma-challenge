@@ -1,15 +1,23 @@
 .Layout {
+  /* position: absolute;
+  min-height: 100vh; */
+}
+
+.Layout-sidebar, .Layout-main {
+  bottom: 0;
   display: flex;
-  min-height: 100vh;
+  flex-direction: column;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
 }
 
 .Layout-sidebar {
-  width: 300px;
-  background: #333;
-  text-align: center;
+  left: 0;
+  width: 230px;
 }
 
 .Layout-main {
-  display: flex;
-  flex: 1;
+  left: 230px;
+  right: 0;
 }
