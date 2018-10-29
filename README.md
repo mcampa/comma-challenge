@@ -1,5 +1,7 @@
 # comma.ai challenge
 
+https://comma-challenge.now.sh/
+
 ## Usage
 ```
 git clone git@github.com:mcampa/comma-challenge.git
