@@ -1,0 +1,10 @@
+.Map {
+  flex: 1;
+  height: 100%;
+  display: flex;
+}
+
+.Map-container {
+  min-height: 0;
+  flex: 1;
+}

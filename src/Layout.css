@@ -1,0 +1,15 @@
+.Layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.Layout-sidebar {
+  width: 300px;
+  background: #333;
+  text-align: center;
+}
+
+.Layout-main {
+  display: flex;
+  flex: 1;
+}

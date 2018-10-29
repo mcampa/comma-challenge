@@ -10,11 +10,17 @@ import { Stamen, Vector as VectorSource } from 'ol/source';
 import { Stroke, Style } from 'ol/style';
 import { fileList } from './fileList';
 
-export default class App extends Component {
+import './Map.css';
+
+export default class MapComponent extends Component {
   inputRef = React.createRef();
 
   render() {
-    return <div ref={this.inputRef} />;
+    return (
+      <div className="Map">
+        <div className="Map-container" ref={this.inputRef} />
+      </div>
+    );
   }
 
   componentDidMount() {
@@ -48,7 +54,7 @@ export default class App extends Component {
       }),
     });
 
-    fileList.slice(12, 15).forEach(async n => {
+    fileList.slice(7, 15).forEach(async n => {
       const coordinates = (await this.loadData(n)).map(({ lng, lat }) => [lng, lat]);
       const lines = coordinates.map(([lng, lat]) => fromLonLat([lng, lat]));
       const feature = new Feature(new LineString(lines));
@@ -60,6 +66,8 @@ export default class App extends Component {
         maxZoom: 12,
       });
     });
+
+    setTimeout(() => map.updateSize(), 100);
   }
 
   loadData = n => fetch(`api/data/${n}`).then(res => res.json());
