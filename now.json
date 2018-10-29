@@ -1,0 +1,15 @@
+{
+  "name": "comma-challenge",
+  "type": "static",
+  "static": {
+    "directoryListing": false,
+    "rewrites": [
+      { "source": "/api/data/:id", "destination": "data/:id.json" },
+      { "source": "/static/css/:file", "destination": "build/static/css/:file" },
+      { "source": "/static/js/:file", "destination": "build/static/js/:file" },
+      { "source": "/:file", "destination": "build/:file" },
+      { "source": "/", "destination": "build/index.html" }
+    ]
+  },
+  "files": ["build", "data"]
+}

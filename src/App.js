@@ -1,28 +1,130 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import * as proj from 'ol/proj';
+import Feature from 'ol/Feature.js';
+import Map from 'ol/Map.js';
+import View from 'ol/View.js';
+import { defaults as defaultControls } from 'ol/control.js';
+import LineString from 'ol/geom/LineString.js';
+import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer.js';
+import { Stamen, Vector as VectorSource } from 'ol/source.js';
+import { Stroke, Style } from 'ol/style.js';
+import { fileList } from './fileList';
 
-class App extends Component {
+export default class App extends Component {
+  inputRef = React.createRef();
+
   render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
+    return <div ref={this.inputRef} />;
   }
+
+  componentDidMount() {
+    const vectorSource = new VectorSource();
+
+    const vectorLayer = new VectorLayer({
+      source: vectorSource,
+      updateWhileAnimating: false,
+      updateWhileInteracting: false,
+    });
+
+    const map = new Map({
+      layers: [
+        new TileLayer({
+          source: new Stamen({
+            layer: 'toner-lite',
+          }),
+        }),
+        vectorLayer,
+      ],
+      renderer: 'webgl',
+      target: this.inputRef.current,
+      controls: defaultControls({
+        attributionOptions: {
+          collapsible: false,
+        },
+      }),
+      view: new View({
+        center: [0, 0],
+        zoom: 2,
+      }),
+    });
+
+    console.log(map);
+
+    fileList.slice(0, 10).forEach(async n => {
+      const coordinates = await this.loadData(n);
+      const lines = coordinates.map(({ lng, lat }) => proj.fromLonLat([lng, lat]));
+      const feature = new Feature(new LineString(lines));
+      feature.setStyle(this.styleFunction(feature));
+      vectorSource.addFeature(feature);
+    });
+  }
+
+  loadData = n => fetch(`api/data/${n}`).then(res => res.json());
+
+  styleFunction = feature => {
+    const geometry = feature.getGeometry();
+    const styles = [];
+
+    geometry.forEachSegment((start, end) => {
+      const speed = getDistanceFromLatLonInKm(proj.toLonLat(start), proj.toLonLat(end)) * 60 * 60;
+      const colorStroke = kphToColorStroke(speed);
+
+      styles.push(
+        new Style({
+          geometry: new LineString([start, end]),
+          stroke: colorStroke,
+        }),
+      );
+    });
+
+    return styles;
+  };
 }
 
-export default App;
+// function averageGeolocation(coords) {
+//   return [
+//     coords.reduce((sum, [lng]) => sum + lng, 0) / coords.length,
+//     coords.reduce((sum, [_, lat]) => sum + lat, 0) / coords.length,
+//   ];
+// }
+
+function getDistanceFromLatLonInKm(coord1, coord2) {
+  const [lon1, lat1] = coord1;
+  const [lon2, lat2] = coord2;
+
+  var R = 6371; // Radius of the earth in km
+  var dLat = deg2rad(lat2 - lat1); // deg2rad below
+  var dLon = deg2rad(lon2 - lon1);
+  var a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  var d = R * c; // Distance in km
+  return d;
+}
+
+function deg2rad(deg) {
+  return deg * (Math.PI / 180);
+}
+
+const colors = [
+  '#ff0000',
+  '#f64d00',
+  '#eb6f00',
+  '#df8900',
+  '#d1a000',
+  '#c0b500',
+  '#abc900',
+  '#90dc00',
+  '#6aed00',
+  '#00ff00',
+];
+
+const colorStrokes = colors.map(color => new Stroke({ color: color, width: 4 }));
+
+function kphToColorStroke(kph) {
+  const max = 160;
+  const clampedSpeed = Math.max(0, Math.min(max, kph));
+  const colorIndex = Math.floor((clampedSpeed * (colors.length - 1)) / max);
+  return colorStrokes[colorIndex];
+}
