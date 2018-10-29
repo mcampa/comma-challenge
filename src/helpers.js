@@ -19,6 +19,7 @@ function deg2rad(deg) {
   return deg * (Math.PI / 180);
 }
 
+// Color scale generated using https://gka.github.io/palettes/
 const colors = [
   '#ff0000',
   '#f64d00',
@@ -34,6 +35,8 @@ const colors = [
 
 const colorStrokes = colors.map(color => new Stroke({ color: color, width: 4 }));
 
+// Return a color stroke style by speed in KPH
+// where 0 KPH is red and 160+ KPH is lime
 export function kphToColorStroke(kph) {
   const max = 160;
   const clampedSpeed = Math.max(0, Math.min(max, kph));

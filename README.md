@@ -8,7 +8,7 @@ yarn
 yarn start
 ```
 
-## Deployment
+## Deployment with zeit.co/now
 ```
 yarn build
 now --public
