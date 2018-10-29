@@ -1,10 +1,10 @@
-.Map {
+.MapComponent {
   flex: 1;
   height: 100%;
   display: flex;
 }
 
-.Map-container {
+.MapComponent-container {
   cursor: grab;
   min-height: 0;
   flex: 1;
