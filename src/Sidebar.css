@@ -1,5 +1,36 @@
 .Sidebar {
   background: #333;
+  display: flex;
+  flex-direction: column;
+}
+
+.Sidebar-title {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 1.2rem;
+  color: #fff;
   text-align: center;
+}
+
+.Sidebar-fileList {
+  border-top: 1px solid #222;
+  flex: 1;
+  margin: 15px;
   overflow-y: scroll;
+  padding: 10px;
+}
+
+.Sidebar-fileItem {
+  border: 1px solid transparent;
+  color: #ddd;
+  cursor: pointer;
+  display: block;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 12px;
+  padding: 2px 5px;
+  user-select: none;
+}
+
+.Sidebar-fileItem:hover {
+  color: #fff;
+  border: 1px solid #eee;
 }
