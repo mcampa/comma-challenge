@@ -1,38 +1,30 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import Map from './Map';
 import Sidebar from './Sidebar';
 
 import './App.css';
 
-export default class App extends Component {
-  state = {
-    selected: new Set(['72']),
-  };
+export default function App() {
+  const [selected, setSelected] = useState(new Set(['72']));
 
-  render() {
-    const { selected } = this.state;
-
-    return (
-      <div className="App">
-        <div className="App-sidebar">
-          <Sidebar selected={selected} onChange={this.handleTripChange} />
-        </div>
-        <div className="App-main">
-          <Map files={selected} />
-        </div>
-      </div>
-    );
-  }
-
-  handleTripChange = e => {
-    const { selected } = this.state;
-
+  const handleTripChange = e => {
     if (e.target.checked) {
       selected.add(e.target.name);
     } else {
       selected.delete(e.target.name);
     }
 
-    this.setState({ selected });
+    setSelected(selected);
   };
+
+  return (
+    <div className="App">
+      <div className="App-sidebar">
+        <Sidebar selected={selected} onChange={handleTripChange} />
+      </div>
+      <div className="App-main">
+        <Map files={selected} />
+      </div>
+    </div>
+  );
 }
