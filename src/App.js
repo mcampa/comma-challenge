@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import * as proj from 'ol/proj';
-import Feature from 'ol/Feature.js';
-import Map from 'ol/Map.js';
-import View from 'ol/View.js';
-import { defaults as defaultControls } from 'ol/control.js';
-import LineString from 'ol/geom/LineString.js';
-import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer.js';
-import { Stamen, Vector as VectorSource } from 'ol/source.js';
-import { Stroke, Style } from 'ol/style.js';
+import { fromLonLat, toLonLat } from 'ol/proj';
+import Feature from 'ol/Feature';
+import Map from 'ol/Map';
+import View from 'ol/View';
+import { defaults as defaultControls } from 'ol/control';
+import LineString from 'ol/geom/LineString';
+import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer';
+import { Stamen, Vector as VectorSource } from 'ol/source';
+import { Stroke, Style } from 'ol/style';
 import { fileList } from './fileList';
 
 export default class App extends Component {
@@ -48,14 +48,17 @@ export default class App extends Component {
       }),
     });
 
-    console.log(map);
-
-    fileList.slice(0, 10).forEach(async n => {
-      const coordinates = await this.loadData(n);
-      const lines = coordinates.map(({ lng, lat }) => proj.fromLonLat([lng, lat]));
+    fileList.slice(12, 15).forEach(async n => {
+      const coordinates = (await this.loadData(n)).map(({ lng, lat }) => [lng, lat]);
+      const lines = coordinates.map(([lng, lat]) => fromLonLat([lng, lat]));
       const feature = new Feature(new LineString(lines));
       feature.setStyle(this.styleFunction(feature));
       vectorSource.addFeature(feature);
+
+      map.getView().fit(vectorSource.getExtent(), {
+        size: map.getSize(),
+        maxZoom: 12,
+      });
     });
   }
 
@@ -66,7 +69,7 @@ export default class App extends Component {
     const styles = [];
 
     geometry.forEachSegment((start, end) => {
-      const speed = getDistanceFromLatLonInKm(proj.toLonLat(start), proj.toLonLat(end)) * 60 * 60;
+      const speed = getDistanceFromLatLonInKm(toLonLat(start), toLonLat(end)) * 60 * 60;
       const colorStroke = kphToColorStroke(speed);
 
       styles.push(
