@@ -1,9 +1,9 @@
-.Layout {
+.App {
   /* position: absolute;
   min-height: 100vh; */
 }
 
-.Layout-sidebar, .Layout-main {
+.App-sidebar, .App-main {
   bottom: 0;
   display: flex;
   flex-direction: column;
@@ -12,12 +12,12 @@
   top: 0;
 }
 
-.Layout-sidebar {
+.App-sidebar {
   left: 0;
   width: 230px;
 }
 
-.Layout-main {
+.App-main {
   left: 230px;
   right: 0;
 }
