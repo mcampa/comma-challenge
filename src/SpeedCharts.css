@@ -38,5 +38,6 @@
 .SpeedCharts-chart {
   flex: 1;
   padding: 10px 30px 0 0;
+  background-color: #fafafa;
 }
 

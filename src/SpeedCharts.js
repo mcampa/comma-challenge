@@ -46,10 +46,10 @@ export default function SpeedCharts() {
           {chartData && (
             <ResponsiveContainer>
               <AreaChart data={chartData}>
-                <XAxis dataKey="seconds" />
-                <YAxis />
+                <XAxis dataKey="seconds" tick={{ fontSize: 10 }} />
+                <YAxis tick={{ fontSize: 10 }} />
                 <Tooltip formatter={v => v.toFixed(2) + 'KPH'} labelFormatter={s => ''} />
-                <Area type="monotone" dataKey="speed" stroke="#333" fill="#EEE" />
+                <Area type="monotone" dataKey="speed" stroke="#82ca9d" strokeWidth={2} fill="#EEE" />
               </AreaChart>
             </ResponsiveContainer>
           )}
