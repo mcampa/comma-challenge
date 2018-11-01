@@ -3,12 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "classnames": "^2.2.6",
     "ol": "^5.2.0",
     "react": "16.7.0-alpha.0",
     "react-dom": "16.7.0-alpha.0",
     "react-scripts": "2.0.5",
-    "sanitize.css": "^8.0.0",
-    "styled-components": "^4.0.2"
+    "sanitize.css": "^8.0.0"
   },
   "scripts": {
     "start": "react-scripts start",

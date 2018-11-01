@@ -1,0 +1,28 @@
+.SidebarOpener {
+  background-color: #333;
+  border-radius: 50%;
+  box-shadow: 1px 0px 7px 0px rgba(0,0,0,0.55);
+  cursor: pointer;
+  display: none;
+  height: 40px;
+  left: 0;
+  margin: 5px -40px 5px 5px;
+  position: relative;
+  top: 0;
+  width: 40px;
+  z-index: 2;
+  color: white;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.4s ease-out;
+}
+
+.App-sidebar.open .SidebarOpener {
+  transform: rotate(-180deg);
+}
+
+@media only screen and (max-width: 768px) {
+  .SidebarOpener {
+    display: flex;
+  }
+}
