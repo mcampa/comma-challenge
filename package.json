@@ -2,6 +2,7 @@
   "name": "comma-challenge",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://comma-challenge.now.sh/",
   "dependencies": {
     "classnames": "^2.2.6",
     "ol": "^5.2.0",
