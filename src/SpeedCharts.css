@@ -1,0 +1,42 @@
+.SpeedCharts {
+  height: 25px;
+}
+
+.SpeedCharts-windowBar {
+  height: 25px;
+  background-color: #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  cursor: pointer;
+}
+
+.SpeedCharts-window {
+  box-shadow: 1px 0px 7px 0px rgba(0,0,0,0.55);
+  border-top: 1px solid #333;
+  height: calc(300px + 25px);
+  transition: transform 0.2s ease-out;
+  position: relative;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+}
+
+.SpeedCharts-windowBarButton {
+  transform: rotate(-90deg);
+}
+
+.SpeedCharts.open .SpeedCharts-window {
+  transform: translateY(-300px);
+}
+
+.SpeedCharts.open .SpeedCharts-windowBarButton {
+  transform: rotate(90deg);
+}
+
+.SpeedCharts-chart {
+  flex: 1;
+  padding: 10px 30px 0 0;
+}
+

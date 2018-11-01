@@ -62,31 +62,23 @@ class MapComponent extends React.Component {
   };
 
   loadData = () => {
-    // Get a list of selected files where the data is available
-    const selectedFiles = [...this.props.selectedFiles].filter(name => this.props.data.hasOwnProperty(name));
-
     // TODO(optimization): Instead of clearing the vector layer every time
     // we could remove the features that are unselected and add the new selected coordinate features
     this.vectorSource.clear();
 
-    selectedFiles.forEach(name => {
-      const coordinates = this.props.data[name];
-      // Transfor coordinates to projection coordinates
-      const lines = coordinates.map(([lng, lat]) => fromLonLat([lng, lat]));
-      // Create a feature for every file of coordnates and style every segment by speed
-      const feature = new Feature(new LineString(lines));
-      feature.setStyle(this.styleFunction(feature));
-      // add the new feature to the vector layer
-      this.vectorSource.addFeature(feature);
-    });
+    const coordinates = this.props.data;
+    // Transfor coordinates to projection coordinates
+    const lines = coordinates.map(([lng, lat]) => fromLonLat([lng, lat]));
+    // Create a feature for every file of coordnates and style every segment by speed
+    const feature = new Feature(new LineString(lines));
+    feature.setStyle(this.styleFunction(feature));
+    // add the new feature to the vector layer
+    this.vectorSource.addFeature(feature);
 
-    if (selectedFiles.length > 0) {
-      // Move the map view to fit all features (trips)
-      this.map.getView().fit(this.vectorSource.getExtent(), {
-        size: this.map.getSize(),
-        maxZoom: 12,
-      });
-    }
+    // Move the map view to fit all features (trips)
+    this.map.getView().fit(this.vectorSource.getExtent(), {
+      size: this.map.getSize(),
+    });
   };
 
   styleFunction = feature => {

@@ -1,6 +1,5 @@
 .App {
-  /* position: absolute;
-  min-height: 100vh; */
+  min-height: 100vh;
 }
 
 .App-sidebar, .App-main {
