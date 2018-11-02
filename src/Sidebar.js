@@ -18,7 +18,7 @@ export default function Sidebar(props) {
         {fileList.map(name => (
           <div key={name}>
             <label className="Sidebar-fileItem">
-              <input name={`${name}`} type="checkbox" onChange={handleTripChange} checked={selectedFile === name} />
+              <input name={`${name}`} type="radio" onChange={handleTripChange} checked={selectedFile === name} />
               {` ${name}.json`}
             </label>
           </div>

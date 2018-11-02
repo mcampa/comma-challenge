@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-
-const INITIAL_SELECTED_FILES = ['72'];
+import { fileList } from './fileList';
 
 export const AppContext = React.createContext();
 const dataCache = {};
@@ -9,7 +8,7 @@ const dataCache = {};
 // This is where all app state is stored
 export function AppProvider({ children }) {
   const [data, setData] = useState({});
-  const [selectedFile, setSelectedFile] = useState(INITIAL_SELECTED_FILES);
+  const [selectedFile, setSelectedFile] = useState(fileList[0]);
 
   async function loadSelectedFilesData() {
     if (!dataCache[selectedFile]) {
